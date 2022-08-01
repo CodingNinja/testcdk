@@ -20,14 +20,16 @@ export class CorePipeline extends Stack {
       synth: new ShellStep("Synth", {
         input: props.repoLocation,
         commands: ["npm ci", "npm run build", "npx cdk synth"],
+        envFromCfnOutputs: {
+
+        }
       }),
     });
 
-    const networkingStage = new EnvironmentPipelineStage(this, "Environment", {
-      cidr: props.cidr
-    });
-
-    pipeline.addStage(networkingStage);
+    pipeline.addStage(new EnvironmentPipelineStage(this, "Environment", {
+        cidr: props.cidr,
+      })
+    );
     
   }
 }
