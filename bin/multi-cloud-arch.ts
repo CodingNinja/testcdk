@@ -1,6 +1,13 @@
 #!/usr/bin/env node
-import * as cdk from '@aws-cdk/core';
-import { MultiCloudArchStack } from '../lib/multi-cloud-arch-stack';
+import { App } from "aws-cdk-lib";
+import { CodePipelineSource } from "aws-cdk-lib/pipelines";
+import { CorePipeline } from "../lib/pipeline/pipeline-stack";
 
-const app = new cdk.App();
-new MultiCloudArchStack(app, 'MultiCloudArchStack');
+const app = new App();
+
+new CorePipeline(app, "CorePipeline", {
+  repoLocation: CodePipelineSource.gitHub("sourcedtestorg/control-plane", "main"),
+  cidr: "10.0.0.0/24"
+});
+
+app.synth();
