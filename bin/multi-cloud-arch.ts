@@ -6,8 +6,8 @@ import { CorePipeline } from "../lib/pipeline/pipeline-stack";
 const app = new App();
 
 new CorePipeline(app, "CorePipeline", {
-  repoLocation: CodePipelineSource.gitHub("sourcedtestorg/control-plane", "main"),
-  cidr: "10.0.0.0/24"
+  repoLocation: CodePipelineSource.gitHub("CodingNinja/testcdk", "master"),
+  cidr: "10.0.0.0/24",
 });
 
 app.synth();
