@@ -17,12 +17,12 @@ export class EnvironmentPipelineStage extends Stage {
   ) {
     super(scope, id, props);
 
-    const nwStack = new NetworkingStack(this, "Networking", {
+    const nwStack = new NetworkingStack(this, "networking", {
       cidr: props.cidr,
     });
 
-    // new ControlPlaneStack(this, "ControlPlane", {
-    //   vpc: nwStack.vpc,
-    // });
+    new ControlPlaneStack(this, "control-plane", {
+      vpc: nwStack.vpc,
+    });
   }
 }

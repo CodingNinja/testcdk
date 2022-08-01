@@ -12,7 +12,7 @@ export class ControlPlaneStack extends Stack {
   constructor(scope: Construct, id: string, props: ControlPlaneStackProps) {
     super(scope, id, props);
 
-    this.cluster = new FargateCluster(this, "control-cluster", {
+    this.cluster = new FargateCluster(this, "control", {
       version: KubernetesVersion.V1_21,
       albController: {
         version: AlbControllerVersion.V2_4_1,
