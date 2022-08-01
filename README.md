@@ -1,7 +1,6 @@
-# Welcome to your CDK TypeScript project
+# Multi Cloud Architecture
 
-You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`MultiCloudArchStack`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+Provisions an AWS EKS Cluster as a control plane which is capable of provisioning N kubernetes clusters and deploying ArgoCD into them for tenant management
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
