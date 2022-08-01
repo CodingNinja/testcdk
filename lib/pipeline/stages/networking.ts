@@ -1,5 +1,6 @@
-import { StackProps, Stage, StageProps } from "aws-cdk-lib";
+import { CfnOutput, StackProps, Stage, StageProps } from "aws-cdk-lib";
 import { IVpc } from "aws-cdk-lib/aws-ec2";
+import { CfnCACertificate } from "aws-cdk-lib/aws-iot";
 import { Construct } from "constructs";
 import { ControlPlaneStack } from "../../stacks/control-plane-stack";
 import { NetworkingStack } from "../../stacks/networking-stack";
@@ -9,7 +10,7 @@ interface EnvironmentPipelineStageProps extends StackProps {
 }
 
 export class EnvironmentPipelineStage extends Stage {
-  public readonly vpc: IVpc;
+  public readonly vpcId: CfnOutput;
   constructor(
     scope: Construct,
     id: string,
@@ -21,8 +22,10 @@ export class EnvironmentPipelineStage extends Stage {
       cidr: props.cidr
     });
 
-    this.vpc = nwStack.vpc
-    
+    this.vpcId = new CfnOutput(nwStack, "VpcId", {
+      value: nwStack.vpc.vpcId,
+    });
+
     new ControlPlaneStack(this, "ControlPlane", {
       vpc: nwStack.vpc,
     });

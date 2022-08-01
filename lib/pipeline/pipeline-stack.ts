@@ -5,7 +5,6 @@ import {
   ShellStep,
 } from "aws-cdk-lib/pipelines";
 import { Stack, StackProps, Stage } from "aws-cdk-lib";
-import { ControlPlanePipelineStage } from "./stages/control-plane";
 import { EnvironmentPipelineStage } from "./stages/networking";
 
 interface CorePipelineProps extends StackProps {
@@ -30,9 +29,5 @@ export class CorePipeline extends Stack {
 
     pipeline.addStage(networkingStage);
     
-    // const pipelineStage = new ControlPlanePipelineStage(this, "test", {
-    //   vpc: networkingStage.vpc,
-    // });
-    // pipeline.addStage(pipelineStage);
   }
 }
