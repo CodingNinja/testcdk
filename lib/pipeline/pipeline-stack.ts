@@ -16,7 +16,7 @@ export class CorePipeline extends Stack {
   constructor(scope: Construct, id: string, props: CorePipelineProps) {
     super(scope, id, props);
 
-    const pipeline = new CodePipeline(this, "Pipeline", {
+    const pipeline = new CodePipeline(this, "code-pipeline", {
       synth: new ShellStep("Synth", {
         input: props.repoLocation,
         commands: ["npm ci", "npm run build", "npx cdk synth"],
@@ -26,7 +26,7 @@ export class CorePipeline extends Stack {
       }),
     });
 
-    pipeline.addStage(new EnvironmentPipelineStage(this, "Environment", {
+    pipeline.addStage(new EnvironmentPipelineStage(this, "env", {
         cidr: props.cidr,
       })
     );

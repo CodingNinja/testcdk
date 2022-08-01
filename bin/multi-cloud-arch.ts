@@ -5,6 +5,8 @@ import { CorePipeline } from "../lib/pipeline/pipeline-stack";
 import { AwsSolutionsChecks } from "cdk-nag";
 
 
+const branchName = process.env["GIT_BRANCH_NAME"] || "master"
+
 const app = new App();
 
 // This is the CodeConnect connection that will be used to clone the source repository
@@ -12,10 +14,14 @@ const app = new App();
 const connectionUuid = "a1aac0e7-b3c0-4711-9cf1-dce54415ba0c"
 const connectionArn = `arn:aws:codestar-connections:${Aws.REGION}:${Aws.ACCOUNT_ID}:connection/${connectionUuid}`;
 
-new CorePipeline(app, "CorePipeline", {
-  repoLocation: CodePipelineSource.connection("CodingNinja/testcdk", "master", {
-    connectionArn: connectionArn,
-  }),
+new CorePipeline(app, `${branchName}-pipeline`, {
+  repoLocation: CodePipelineSource.connection(
+    "CodingNinja/testcdk",
+    branchName,
+    {
+      connectionArn: connectionArn,
+    }
+  ),
   cidr: "10.0.0.0/24",
 });
 

@@ -13,7 +13,7 @@ export class NetworkingStack extends Stack {
   constructor(scope: Construct, id: string, props: NetworkingStackProps) {
     super(scope, id, props);
 
-    this.vpc = new Vpc(this, "my-cdk-vpc", {
+    this.vpc = new Vpc(this, "vpc", {
       cidr: props?.cidr,
     });
   }
