@@ -22,8 +22,7 @@ export class EnvironmentPipelineStage extends Stage {
     });
 
     this.vpc = nwStack.vpc
-
-
+    
     new ControlPlaneStack(this, "ControlPlane", {
       vpc: nwStack.vpc,
     });

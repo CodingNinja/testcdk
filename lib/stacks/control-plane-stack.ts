@@ -1,6 +1,6 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { CustomResource, Stack, StackProps } from "aws-cdk-lib";
 import { IVpc } from "aws-cdk-lib/aws-ec2";
-import { AlbControllerVersion, FargateCluster, KubernetesVersion } from "aws-cdk-lib/aws-eks";
+import { AlbControllerVersion, FargateCluster, HelmChart, ICluster, KubectlProvider, KubernetesManifest, KubernetesVersion } from "aws-cdk-lib/aws-eks";
 import { Construct } from "constructs";
 
 interface ControlPlaneStackProps extends StackProps {
@@ -8,15 +8,22 @@ interface ControlPlaneStackProps extends StackProps {
 }
 
 export class ControlPlaneStack extends Stack {
+  public readonly cluster: ICluster
   constructor(scope: Construct, id: string, props: ControlPlaneStackProps) {
     super(scope, id, props);
 
-    new FargateCluster(this, "Control", {
+    this.cluster = new FargateCluster(this, "Control", {
       version: KubernetesVersion.V1_21,
       albController: {
         version: AlbControllerVersion.V2_4_1,
       },
       vpc: props.vpc
     })
+
+    // this.cluster.addHelmChart("foo", {
+    //   chart: new HelmChart(this, "aoe", {
+
+    //   })
+    // })
   }
 }
